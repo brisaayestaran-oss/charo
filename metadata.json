@@ -1,0 +1,6 @@
+{
+  "name": "Charo Cumple 10 - Invitación Snoopy",
+  "description": "Invitación virtual interactiva para el cumpleaños número 10 de Charo, inspirada en Snoopy y Woodstock.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
