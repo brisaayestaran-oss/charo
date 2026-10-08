@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { INVITATION_CONFIG } from './config';
 import { MusicButton } from './components/MusicButton';
@@ -7,7 +7,7 @@ import { LocationModal } from './components/LocationModal';
 import { RsvpModal } from './components/RsvpModal';
 import { SnoopyClosingVideo } from './components/SnoopyClosingVideo';
 import {
-  FriesStationeryIcon,
+  PartyFriendsDoodle,
   HouseStationeryIcon,
   FlyingWoodstockConnector,
   HandDrawnSeparator,
@@ -18,6 +18,10 @@ import {
 export default function App() {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [isRsvpOpen, setIsRsvpOpen] = useState(false);
+  const [rsvpInitialEvent, setRsvpInitialEvent] = useState<'amiguitos' | 'familia'>('amiguitos');
+  
+  // Pestañas exclusivas: 'amiguitos' o 'familia' (nunca ambas juntas)
+  const [activeTab, setActiveTab] = useState<'amiguitos' | 'familia'>('amiguitos');
 
   // Efecto de confeti alegre y delicado al entrar a la página
   useEffect(() => {
@@ -32,6 +36,11 @@ export default function App() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleOpenRsvp = (event: 'amiguitos' | 'familia') => {
+    setRsvpInitialEvent(event);
+    setIsRsvpOpen(true);
+  };
 
   return (
     // Marco exterior con patrón cuadriculado pastel suave (rosa, amarillo manteca, blanco crema, celeste)
@@ -122,110 +131,161 @@ export default function App() {
         </motion.div>
 
         {/* Separador sutil de trazo fino con aire generoso */}
-        <div className="my-3 flex items-center justify-center gap-2 select-none opacity-40">
+        <div className="my-2.5 flex items-center justify-center gap-2 select-none opacity-40">
           <span className="w-8 h-[1px] bg-[#F8CDD7]" />
           <span className="text-[#E95773] text-xs">♡</span>
           <span className="w-8 h-[1px] bg-[#F8CDD7]" />
         </div>
 
         {/* ========================================================= */}
-        {/* SECCIÓN CONTINUA DE LOS FESTEJOS: AMIGUITOS + FAMILIA */}
+        {/* PESTAÑAS ARRIBA: "Amiguitos" y "Familia" (excluyentes) */}
         {/* ========================================================= */}
-        <div className="relative my-2">
-          
-          {/* ========================================================= */}
-          {/* 3) TARJETA AMIGUITOS (Amarillo manteca suave, centrada 88-90%) */}
-          {/* ========================================================= */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-20px' }}
-            transition={{ duration: 0.55 }}
-            className="w-[90%] sm:w-[88%] mx-auto bg-[#FFFDE8] rounded-[28px] py-7 px-5 sm:py-8 sm:px-6 text-center border border-[#FFF0A8] transition-transform hover:scale-[1.01] shadow-2xs relative"
-          >
-            {/* 1. Pequeño ícono ilustrado estilo Snoopy */}
-            <div className="flex justify-center mb-1">
-              <FriesStationeryIcon className="w-10 h-10" />
-            </div>
-
-            {/* 2. Título manuscrito */}
-            <h3 className="font-script font-bold text-[30px] sm:text-[32px] text-[#29252A] leading-tight mt-1 mb-1.5">
-              {INVITATION_CONFIG.friendsEvent.title}
-            </h3>
-
-            {/* 3. Texto secundario */}
-            <p className="font-body font-medium text-[13.5px] text-[#29252A]/70 mb-3.5">
-              {INVITATION_CONFIG.friendsEvent.subtitle}
-            </p>
-
-            {/* 4. Horario en negrita */}
-            <div className="font-body font-extrabold text-[17.5px] text-[#29252A] mb-1.5 tracking-wide">
-              {INVITATION_CONFIG.friendsEvent.time}
-            </div>
-
-            {/* 5. Lugar (SIN DIRECCIÓN) */}
-            <div className="font-body font-bold text-[18px] text-[#29252A]">
-              {INVITATION_CONFIG.friendsEvent.placeName}
-            </div>
-          </motion.div>
-
-          {/* ========================================================= */}
-          {/* CONECTOR CONTINUO ENTRE AMBAS TARJETAS */}
-          {/* Woodstock volando + línea punteada curva + "Y después..." */}
-          {/* ========================================================= */}
-          <div className="my-6 relative flex flex-col items-center justify-center">
-            {/* Trayectoria de vuelo punteada con Woodstock de izquierda a derecha */}
-            <div className="w-[88%] mx-auto -mb-2">
-              <FlyingWoodstockConnector />
-            </div>
-
-            {/* Separador delicado dibujado a mano */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="relative z-10 -mt-3"
+        <div className="w-[90%] sm:w-[88%] mx-auto mt-2 mb-4">
+          <div className="flex items-center justify-center p-1.5 bg-[#FFF0A8]/30 rounded-full border border-[#FFF0A8] shadow-2xs gap-1.5">
+            {/* Pestaña 1: Amiguitos */}
+            <button
+              onClick={() => setActiveTab('amiguitos')}
+              type="button"
+              className={`flex-1 py-2.5 px-3 rounded-full text-[14px] font-body font-bold transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-1.5 ${
+                activeTab === 'amiguitos'
+                  ? 'bg-[#FFFDE8] text-[#29252A] shadow-xs border border-[#FDE68A] scale-[1.02]'
+                  : 'text-[#29252A]/70 hover:text-[#29252A]'
+              }`}
             >
-              <HandDrawnSeparator text={INVITATION_CONFIG.separatorText} />
-            </motion.div>
+              <span>🎈</span>
+              <span>Amiguitos</span>
+            </button>
+
+            {/* Pestaña 2: Familia */}
+            <button
+              onClick={() => setActiveTab('familia')}
+              type="button"
+              className={`flex-1 py-2.5 px-3 rounded-full text-[14px] font-body font-bold transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-1.5 ${
+                activeTab === 'familia'
+                  ? 'bg-[#FEF4F7] text-[#29252A] shadow-xs border border-[#F8CDD7] scale-[1.02]'
+                  : 'text-[#29252A]/70 hover:text-[#29252A]'
+              }`}
+            >
+              <span>🏡</span>
+              <span>Familia</span>
+            </button>
           </div>
+        </div>
 
-          {/* ========================================================= */}
-          {/* 5) TARJETA FAMILIA (Rosa pastel suave, centrada 88-90%) */}
-          {/* ========================================================= */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-20px' }}
-            transition={{ duration: 0.55 }}
-            className="w-[90%] sm:w-[88%] mx-auto bg-[#FEF4F7] rounded-[28px] py-7 px-5 sm:py-8 sm:px-6 text-center border border-[#F8CDD7] transition-transform hover:scale-[1.01] shadow-2xs relative"
-          >
-            {/* 1. Pequeño ícono ilustrado estilo Snoopy */}
-            <div className="flex justify-center mb-1">
-              <HouseStationeryIcon className="w-10 h-10" />
-            </div>
+        {/* ========================================================= */}
+        {/* CONTENIDO EXCLUSIVO DE LA PESTAÑA SELECCIONADA */}
+        {/* ========================================================= */}
+        <div className="relative my-2 min-h-[310px]">
+          <AnimatePresence mode="wait">
+            {activeTab === 'amiguitos' ? (
+              /* ========================================================= */
+              /* 1) SECCIÓN AMIGUITOS (Amarillo manteca suave) */
+              /* ========================================================= */
+              <motion.div
+                key="tab-amiguitos"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+                className="w-[90%] sm:w-[88%] mx-auto bg-[#FFFDE8] rounded-[28px] py-7 px-5 sm:py-8 sm:px-6 text-center border border-[#FFF0A8] shadow-2xs relative"
+              >
+                {/* 1. Pequeño ícono divertido infantil estilo Snoopy (globos y pastel) */}
+                <div className="flex justify-center mb-1">
+                  <PartyFriendsDoodle className="w-10 h-10" />
+                </div>
 
-            {/* 2. Título manuscrito */}
-            <h3 className="font-script font-bold text-[30px] sm:text-[32px] text-[#29252A] leading-tight mt-1 mb-1.5">
-              {INVITATION_CONFIG.familyEvent.title}
-            </h3>
+                {/* 2. Título manuscrito */}
+                <h3 className="font-script font-bold text-[30px] sm:text-[32px] text-[#29252A] leading-tight mt-1 mb-1.5">
+                  {INVITATION_CONFIG.friendsEvent.title}
+                </h3>
 
-            {/* 3. Texto secundario */}
-            <p className="font-body font-medium text-[13.5px] text-[#29252A]/70 mb-3.5">
-              {INVITATION_CONFIG.familyEvent.subtitle}
-            </p>
+                {/* 3. Texto secundario */}
+                <p className="font-body font-medium text-[13.5px] text-[#29252A]/70 mb-3.5">
+                  {INVITATION_CONFIG.friendsEvent.subtitle}
+                </p>
 
-            {/* 4. Horario en negrita */}
-            <div className="font-body font-extrabold text-[17.5px] text-[#29252A] mb-1.5 tracking-wide">
-              {INVITATION_CONFIG.familyEvent.time}
-            </div>
+                {/* 4. Horario en negrita */}
+                <div className="font-body font-extrabold text-[17.5px] text-[#29252A] mb-1.5 tracking-wide">
+                  {INVITATION_CONFIG.friendsEvent.time}
+                </div>
 
-            {/* 5. Lugar: Calle 4 y 40 */}
-            <div className="font-body font-bold text-[17px] text-[#29252A]">
-              {INVITATION_CONFIG.familyEvent.address}
-            </div>
-          </motion.div>
+                {/* 5. Lugar: Calle 4 y 40 */}
+                <div className="font-body font-bold text-[18px] text-[#29252A] mb-4">
+                  {INVITATION_CONFIG.friendsEvent.placeName}
+                </div>
 
+                {/* Botón: Confirmar asistencia claramente clickeable */}
+                <button
+                  type="button"
+                  onClick={() => handleOpenRsvp('amiguitos')}
+                  className="w-full py-3 px-4 rounded-full bg-[#FFF0A8] hover:bg-[#FDE68A] text-[#29252A] font-body font-bold text-[14.5px] shadow-2xs transition-all active:scale-[0.98] border border-[#FCD34D] flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>💬</span>
+                  <span>Confirmar asistencia</span>
+                </button>
+              </motion.div>
+            ) : (
+              /* ========================================================= */
+              /* 2) SECCIÓN FAMILIA (Rosa pastel suave con separador) */
+              /* ========================================================= */
+              <motion.div
+                key="tab-familia"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+                className="space-y-4"
+              >
+                {/* Separador entre secciones con el texto: “Y después seguimos festejando...” */}
+                <div className="mb-2 relative flex flex-col items-center justify-center">
+                  <div className="w-[88%] mx-auto -mb-2">
+                    <FlyingWoodstockConnector />
+                  </div>
+                  <div className="relative z-10 -mt-3">
+                    <HandDrawnSeparator text={INVITATION_CONFIG.separatorText} />
+                  </div>
+                </div>
+
+                {/* Tarjeta Familia */}
+                <div className="w-[90%] sm:w-[88%] mx-auto bg-[#FEF4F7] rounded-[28px] py-7 px-5 sm:py-8 sm:px-6 text-center border border-[#F8CDD7] shadow-2xs relative">
+                  {/* 1. Pequeño ícono ilustrado de casita */}
+                  <div className="flex justify-center mb-1">
+                    <HouseStationeryIcon className="w-10 h-10" />
+                  </div>
+
+                  {/* 2. Título manuscrito */}
+                  <h3 className="font-script font-bold text-[30px] sm:text-[32px] text-[#29252A] leading-tight mt-1 mb-1.5">
+                    {INVITATION_CONFIG.familyEvent.title}
+                  </h3>
+
+                  {/* 3. Texto secundario */}
+                  <p className="font-body font-medium text-[13.5px] text-[#29252A]/70 mb-3.5">
+                    {INVITATION_CONFIG.familyEvent.subtitle}
+                  </p>
+
+                  {/* 4. Horario en negrita */}
+                  <div className="font-body font-extrabold text-[17.5px] text-[#29252A] mb-1.5 tracking-wide">
+                    {INVITATION_CONFIG.familyEvent.time}
+                  </div>
+
+                  {/* 5. Lugar: Calle 4 y 40 */}
+                  <div className="font-body font-bold text-[17.5px] text-[#29252A] mb-4">
+                    {INVITATION_CONFIG.familyEvent.address}
+                  </div>
+
+                  {/* Botón: Confirmar asistencia claramente clickeable */}
+                  <button
+                    type="button"
+                    onClick={() => handleOpenRsvp('familia')}
+                    className="w-full py-3 px-4 rounded-full bg-[#F8CDD7] hover:bg-[#F2BAC7] text-[#29252A] font-body font-bold text-[14.5px] shadow-2xs transition-all active:scale-[0.98] border border-[#F2B6C4] flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <span>💬</span>
+                    <span>Confirmar asistencia</span>
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* ========================================================= */}
@@ -262,7 +322,7 @@ export default function App() {
         </motion.div>
 
         {/* ========================================================= */}
-        {/* 7) BOTONES FINALES (Celeste pastel y rosa pastel suaves) */}
+        {/* 7) BOTÓN DE UBICACIÓN (Celeste pastel suave) */}
         {/* ========================================================= */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -270,24 +330,14 @@ export default function App() {
           viewport={{ once: true }}
           className="mt-6 space-y-3 px-2"
         >
-          {/* Botón 1: Ver ubicación (Celeste pastel suave #DCEFF7) */}
+          {/* Botón: Ver ubicación en Calle 4 y 40 */}
           <button
             onClick={() => setIsLocationOpen(true)}
             type="button"
             className="w-full py-3.5 px-6 rounded-full bg-[#DCEFF7] hover:bg-[#CFE8F3] text-[#1E4760] font-body font-bold text-[15px] shadow-2xs transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer border border-[#C2E3F2]/70"
           >
             <span className="text-base">📍</span>
-            <span>Ver ubicación</span>
-          </button>
-
-          {/* Botón 2: Confirmar asistencia (Rosa pastel suave #F8CDD7) */}
-          <button
-            onClick={() => setIsRsvpOpen(true)}
-            type="button"
-            className="w-full py-3.5 px-6 rounded-full bg-[#F8CDD7] hover:bg-[#F2BAC7] text-[#29252A] font-body font-bold text-[15px] shadow-2xs transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer border border-[#F2B6C4]/70"
-          >
-            <span className="text-base">💬</span>
-            <span>Confirmar asistencia</span>
+            <span>Ver ubicación en Calle 4 y 40</span>
           </button>
         </motion.div>
 
@@ -300,7 +350,11 @@ export default function App() {
 
       {/* Modales interactivos */}
       <LocationModal isOpen={isLocationOpen} onClose={() => setIsLocationOpen(false)} />
-      <RsvpModal isOpen={isRsvpOpen} onClose={() => setIsRsvpOpen(false)} />
+      <RsvpModal
+        isOpen={isRsvpOpen}
+        onClose={() => setIsRsvpOpen(false)}
+        initialEvent={rsvpInitialEvent}
+      />
     </div>
   );
 }

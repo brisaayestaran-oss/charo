@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
-import { MessageCircle, X, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { INVITATION_CONFIG } from '../config';
-import { HeartDoodle, FriesIcon, HouseIcon } from './Decorations';
+import { HeartDoodle, PartyIcon, HouseIcon } from './Decorations';
 
 interface RsvpModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialEvent?: 'amiguitos' | 'familia';
 }
 
-export const RsvpModal: React.FC<RsvpModalProps> = ({ isOpen, onClose }) => {
-  const [selectedEvent, setSelectedEvent] = useState<'mcdonalds' | 'familia'>('mcdonalds');
+export const RsvpModal: React.FC<RsvpModalProps> = ({
+  isOpen,
+  onClose,
+  initialEvent = 'amiguitos',
+}) => {
+  const [selectedEvent, setSelectedEvent] = useState<'amiguitos' | 'familia'>(initialEvent);
   const [guestName, setGuestName] = useState('');
+
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedEvent(initialEvent);
+    }
+  }, [isOpen, initialEvent]);
 
   if (!isOpen) return null;
 
@@ -31,14 +42,14 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({ isOpen, onClose }) => {
     let text = '';
     const nameStr = guestName.trim();
 
-    if (selectedEvent === 'mcdonalds') {
+    if (selectedEvent === 'amiguitos') {
       text = nameStr
-        ? `Hola, soy ${nameStr}. Confirmo asistencia al cumpleaños de Charo para McDonald’s.`
-        : `Hola, confirmo asistencia al cumpleaños de Charo para McDonald’s.`;
+        ? `Hola, soy ${nameStr}. Confirmo asistencia al cumpleaños de Charo para festejar con los amiguitos (De 13:00 a 15:00 hs en Calle 4 y 40) 💕`
+        : `Hola, confirmo asistencia al cumpleaños de Charo para festejar con los amiguitos (De 13:00 a 15:00 hs en Calle 4 y 40) 💕`;
     } else {
       text = nameStr
-        ? `Hola, soy ${nameStr}. Confirmo asistencia al cumpleaños de Charo para el festejo familiar.`
-        : `Hola, confirmo asistencia al cumpleaños de Charo para el festejo familiar.`;
+        ? `Hola, soy ${nameStr}. Confirmo asistencia al cumpleaños de Charo para el festejo familiar (A partir de las 17:00 hs en Calle 4 y 40) 💕`
+        : `Hola, confirmo asistencia al cumpleaños de Charo para el festejo familiar (A partir de las 17:00 hs en Calle 4 y 40) 💕`;
     }
 
     const whatsappUrl = `https://wa.me/${INVITATION_CONFIG.links.whatsappNumber}?text=${encodeURIComponent(text)}`;
@@ -65,7 +76,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({ isOpen, onClose }) => {
           onClick={onClose}
           type="button"
           aria-label="Cerrar modal"
-          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#FFFDF7] border border-[#F8CDD7]/60 text-[#29252A]/70 flex items-center justify-center hover:bg-[#F8CDD7]/20 transition-colors"
+          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#FFFDF7] border border-[#F8CDD7]/60 text-[#29252A]/70 flex items-center justify-center hover:bg-[#F8CDD7]/20 transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
@@ -94,43 +105,43 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({ isOpen, onClose }) => {
             />
           </div>
 
-          {/* Opciones excluyentes: McDonald's o Festejo Familiar */}
+          {/* Opciones: Amiguitos o Familia */}
           <div>
             <label className="block text-xs font-bold text-[#29252A] mb-2 font-body">
               Elegí a cuál asistís:
             </label>
             <div className="space-y-2.5">
-              {/* Opción 1: McDonald's */}
+              {/* Opción 1: Amiguitos */}
               <button
                 type="button"
-                onClick={() => setSelectedEvent('mcdonalds')}
-                className={`w-full flex items-center justify-between p-3.5 rounded-2xl text-left border transition-all ${
-                  selectedEvent === 'mcdonalds'
+                onClick={() => setSelectedEvent('amiguitos')}
+                className={`w-full flex items-center justify-between p-3.5 rounded-2xl text-left border transition-all cursor-pointer ${
+                  selectedEvent === 'amiguitos'
                     ? 'bg-[#FFFDE8] border-[#FFF0A8] ring-2 ring-[#FFF0A8] shadow-2xs'
                     : 'bg-[#FFFDF7] border-[#F8CDD7]/40 hover:bg-[#FFFDE8]/40'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <FriesIcon className="w-6 h-6 shrink-0" />
+                  <PartyIcon className="w-6 h-6 shrink-0" />
                   <div>
                     <div className="font-script font-bold text-lg text-[#29252A] leading-tight">
-                      Confirmo para McDonald’s
+                      Para mis amiguitos
                     </div>
                     <div className="text-xs text-[#29252A]/70 font-body font-medium">
-                      Para amiguitos • De 13:00 a 15:00 hs
+                      De 13:00 a 15:00 hs • Calle 4 y 40
                     </div>
                   </div>
                 </div>
-                {selectedEvent === 'mcdonalds' && (
+                {selectedEvent === 'amiguitos' && (
                   <CheckCircle2 className="w-5 h-5 text-[#B45309] shrink-0" />
                 )}
               </button>
 
-              {/* Opción 2: Festejo Familiar */}
+              {/* Opción 2: Familia */}
               <button
                 type="button"
                 onClick={() => setSelectedEvent('familia')}
-                className={`w-full flex items-center justify-between p-3.5 rounded-2xl text-left border transition-all ${
+                className={`w-full flex items-center justify-between p-3.5 rounded-2xl text-left border transition-all cursor-pointer ${
                   selectedEvent === 'familia'
                     ? 'bg-[#FEF4F7] border-[#F8CDD7] ring-2 ring-[#F8CDD7] shadow-2xs'
                     : 'bg-[#FFFDF7] border-[#F8CDD7]/40 hover:bg-[#FEF4F7]/40'
@@ -140,10 +151,10 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({ isOpen, onClose }) => {
                   <HouseIcon className="w-6 h-6 shrink-0" />
                   <div>
                     <div className="font-script font-bold text-lg text-[#29252A] leading-tight">
-                      Confirmo para el festejo familiar
+                      Para la familia
                     </div>
                     <div className="text-xs text-[#29252A]/70 font-body font-medium">
-                      Calle 4 y 40 • A partir de las 17:00 hs
+                      A partir de las 17:00 hs • Calle 4 y 40
                     </div>
                   </div>
                 </div>
@@ -154,13 +165,12 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Botón de acción WhatsApp */}
+          {/* Botón WhatsApp */}
           <button
             type="submit"
-            className="w-full mt-2 flex items-center justify-center gap-2 py-3.5 px-4 rounded-full bg-[#25D366] hover:bg-[#20BE5B] text-white font-body font-bold text-sm transition-all shadow-sm active:scale-[0.98]"
+            className="w-full mt-2 py-3.5 px-4 rounded-full bg-[#F8CDD7] hover:bg-[#F2BAC7] text-[#29252A] font-body font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 border border-[#F2B6C4]"
           >
-            <MessageCircle className="w-4 h-4 fill-white" />
-            <span>Confirmar por WhatsApp</span>
+            <span>💬 Confirmar por WhatsApp</span>
           </button>
         </form>
       </div>

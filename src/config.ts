@@ -1,19 +1,19 @@
-/**
- * Configuración de la invitación para Charo
- * Con los enlaces reales y assets provistos por el usuario.
- */
+export interface EventDetails {
+  emoji: string;
+  title: string;
+  subtitle: string;
+  time: string;
+  placeName?: string;
+  address?: string;
+}
 
 export const INVITATION_CONFIG = {
-  // Datos de la cumpleañera
+  // Datos Principales
   birthdayGirl: "Charo",
   age: 10,
   mainTitle: "¡Estás invitado!",
 
-  // Audio / Música
-  audioFileUrl: "/audio/charo-theme.mp3",
-  audioFallbackUrl: "/audio/snoopy.mp3",
-
-  // Assets reales de Snoopy provistos por el usuario
+  // Assets Principales
   heroImageUrl: "/images/snoopy-portada.png",
   closingImageUrl: "/images/snoopy-cierre.png",
   heroImage: {
@@ -32,19 +32,19 @@ export const INVITATION_CONFIG = {
     alt: "Animación de Snoopy y Woodstock",
   },
 
-  // Bloque Amiguitos (SIN DIRECCIÓN)
+  // Bloque 1: Amiguitos (Calle 4 y 40)
   friendsEvent: {
-    emoji: "🍟",
+    emoji: "🎈",
     title: "Para mis amiguitos",
     subtitle: "Los invitamos a festejar conmigo",
     time: "De 13:00 a 15:00 hs",
-    placeName: "McDonald’s",
+    placeName: "Calle 4 y 40",
   },
 
   // Separador intermedio
   separatorText: "Y después seguimos festejando...",
 
-  // Bloque Familia (CON DIRECCIÓN: Calle 4 y 40)
+  // Bloque 2: Familia (Calle 4 y 40)
   familyEvent: {
     emoji: "🏠",
     title: "Para la familia",
@@ -59,10 +59,11 @@ export const INVITATION_CONFIG = {
     subtitle: "Con cariño, Charo 💕",
   },
 
-  // Teléfono de WhatsApp y enlaces
+  // Contacto y enlaces de utilidad
   links: {
-    whatsappNumber: "5492216730542", // +54 9 221 673-0542
+    whatsappNumber: "5492215082163",
+    eventAddress: "Calle 4 y 40",
     familyAddress: "Calle 4 y 40",
     familyMapsUrl: "https://www.google.com/maps/search/?api=1&query=Calle+4+y+40",
   },
-};
+} as const;

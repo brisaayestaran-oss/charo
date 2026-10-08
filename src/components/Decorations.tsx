@@ -1,31 +1,52 @@
 import React from 'react';
 
 /**
- * Ícono ilustrado de papas fritas estilo Peanuts / Snoopy
- * Trazo artesanal a mano, bolsa roja con corazón y papas doradas con personalidad.
+ * Ícono ilustrado festivo e infantil para la sección de amiguitos
+ * Globos de fiesta pastel y pastelito de cumpleaños con velita encendida estilo Schulz doodle.
+ * Cero relación con McDonald's.
  */
-export const FriesStationeryIcon: React.FC<{ className?: string }> = ({ className = 'w-10 h-10' }) => (
-  <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    {/* Papitas doradas dibujadas a mano con distintas inclinaciones */}
-    <rect x="13" y="6" width="3.6" height="18" rx="1.8" transform="rotate(-12 13 6)" fill="#FCD34D" stroke="#29252A" strokeWidth="1.5" />
-    <rect x="19" y="3" width="4" height="21" rx="2" fill="#FBBF24" stroke="#29252A" strokeWidth="1.5" />
-    <rect x="25.5" y="5" width="3.6" height="19" rx="1.8" transform="rotate(10 25.5 5)" fill="#FCD34D" stroke="#29252A" strokeWidth="1.5" />
-    <rect x="30" y="8" width="3.2" height="16" rx="1.6" transform="rotate(20 30 8)" fill="#FBBF24" stroke="#29252A" strokeWidth="1.5" />
-    <rect x="8.5" y="9" width="3.4" height="15" rx="1.7" transform="rotate(-20 8.5 9)" fill="#FCD34D" stroke="#29252A" strokeWidth="1.5" />
+export const PartyFriendsDoodle: React.FC<{ className?: string }> = ({ className = 'w-10 h-10' }) => (
+  <svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    {/* Destello de estrellitas arriba */}
+    <path d="M11 7 L12 10 L15 11 L12 12 L11 15 L10 12 L7 11 L10 10 Z" fill="#FBBF24" stroke="#29252A" strokeWidth="0.8" />
+    <path d="M37 6 L38 8 L40 9 L38 10 L37 12 L36 10 L34 9 L36 8 Z" fill="#E95773" stroke="#29252A" strokeWidth="0.8" />
 
-    {/* Paquete clásico con borde suave */}
+    {/* Globo 1 (Rosa pastel a la izquierda) */}
     <path
-      d="M8 19 L12 39 C12.5 40.5 14 41 16 41 L28 41 C30 41 31.5 40.5 32 39 L36 19 C36 19 29 22 22 22 C15 22 8 19 8 19 Z"
-      fill="#E95773"
+      d="M17 19 C17 13.5 13 9 8 9 C3 9 -1 13.5 -1 19 C-1 24.5 3 28 8 28 C9.5 28 11 27.5 12 26.5 L12.5 29 L14 29 L13.5 26.5 C15.5 24.5 17 22 17 19 Z"
+      transform="translate(8, 2)"
+      fill="#F8CDD7"
       stroke="#29252A"
-      strokeWidth="2"
-      strokeLinejoin="round"
+      strokeWidth="1.6"
     />
-    {/* Corazoncito blanco en el frente del paquete */}
+    {/* Brillo del globo 1 */}
+    <path d="M12 14 C12 12 14 11 15 11" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" />
+
+    {/* Globo 2 (Amarillo manteca a la derecha) */}
     <path
-      d="M22 34 C22 34 17 30 17 27 C17 25 18.5 24 20.5 25 C21.5 25.6 22 26.2 22 26.2 C22 26.2 22.5 25.6 23.5 25 C25.5 24 27 25 27 27 C27 30 22 34 22 34 Z"
-      fill="#FFFFFF"
+      d="M18 17 C18 12 22 8 27 8 C32 8 36 12 36 17 C36 22 32 25.5 27 25.5 C25.5 25.5 24 25 23 24.2 L22.5 26.5 L21 26.5 L21.5 24.2 C19.5 22.5 18 20 18 17 Z"
+      fill="#FFF0A8"
+      stroke="#29252A"
+      strokeWidth="1.6"
     />
+    {/* Brillo del globo 2 */}
+    <path d="M29 13 C31 13 32 14.5 32 16.5" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" />
+
+    {/* Cintas de los globos que bajan onduladas */}
+    <path d="M20.5 31 C21 34 18 36 21 39" stroke="#E95773" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+    <path d="M26.5 30.5 C26 33 28 35 25 39" stroke="#29252A" strokeWidth="1.2" strokeLinecap="round" strokeDasharray="2 2" fill="none" />
+
+    {/* Mini pastelito con velita en el centro */}
+    {/* Velita */}
+    <rect x="22" y="27" width="2" height="6" fill="#F8CDD7" stroke="#29252A" strokeWidth="1" />
+    {/* Llamita encendida */}
+    <path d="M23 24 C22 25.5 24 26 23 27 C24 26 24 25.5 23 24 Z" fill="#F59E0B" stroke="#29252A" strokeWidth="0.8" />
+    {/* Base del pastel */}
+    <rect x="17" y="33" width="12" height="8" rx="2" fill="#FFFFFF" stroke="#29252A" strokeWidth="1.5" />
+    <path d="M17 35 Q 20 37, 23 35 Q 26 37, 29 35" stroke="#E95773" strokeWidth="1.4" fill="none" />
+    <circle cx="20" cy="38" r="0.8" fill="#FBBF24" />
+    <circle cx="23" cy="39" r="0.8" fill="#E95773" />
+    <circle cx="26" cy="38" r="0.8" fill="#FBBF24" />
   </svg>
 );
 
@@ -162,7 +183,7 @@ export const HandDrawnSeparator: React.FC<{ text: string }> = ({ text }) => (
   </div>
 );
 
-export const FriesIcon = FriesStationeryIcon;
+export const PartyIcon = PartyFriendsDoodle;
 export const HouseIcon = HouseStationeryIcon;
 
 export const HeartDoodle: React.FC<{ className?: string; color?: string }> = ({
