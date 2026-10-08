@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { X, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { INVITATION_CONFIG } from '../config';
 import { HeartDoodle, PartyIcon, HouseIcon } from './Decorations';
@@ -7,24 +7,19 @@ import { HeartDoodle, PartyIcon, HouseIcon } from './Decorations';
 interface RsvpModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialEvent?: 'amiguitos' | 'familia';
+  targetEvent: 'amiguitos' | 'familia';
 }
 
 export const RsvpModal: React.FC<RsvpModalProps> = ({
   isOpen,
   onClose,
-  initialEvent = 'amiguitos',
+  targetEvent,
 }) => {
-  const [selectedEvent, setSelectedEvent] = useState<'amiguitos' | 'familia'>(initialEvent);
   const [guestName, setGuestName] = useState('');
 
-  useEffect(() => {
-    if (isOpen) {
-      setSelectedEvent(initialEvent);
-    }
-  }, [isOpen, initialEvent]);
-
   if (!isOpen) return null;
+
+  const isFriends = targetEvent === 'amiguitos';
 
   const triggerConfetti = () => {
     confetti({
@@ -39,17 +34,17 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
     e.preventDefault();
     triggerConfetti();
 
-    let text = '';
     const nameStr = guestName.trim();
+    let text = '';
 
-    if (selectedEvent === 'amiguitos') {
+    if (isFriends) {
       text = nameStr
-        ? `Hola, soy ${nameStr}. Confirmo asistencia al cumpleaños de Charo para festejar con los amiguitos (De 13:00 a 15:00 hs en Calle 4 y 40) 💕`
-        : `Hola, confirmo asistencia al cumpleaños de Charo para festejar con los amiguitos (De 13:00 a 15:00 hs en Calle 4 y 40) 💕`;
+        ? `¡Hola! Soy ${nameStr}. Confirmo asistencia para festejar con los amiguitos el cumple de Charo (De 13:00 a 15:00 hs en Calle 4 y 40) 🎈💕`
+        : `¡Hola! Confirmo asistencia para festejar con los amiguitos el cumple de Charo (De 13:00 a 15:00 hs en Calle 4 y 40) 🎈💕`;
     } else {
       text = nameStr
-        ? `Hola, soy ${nameStr}. Confirmo asistencia al cumpleaños de Charo para el festejo familiar (A partir de las 17:00 hs en Calle 4 y 40) 💕`
-        : `Hola, confirmo asistencia al cumpleaños de Charo para el festejo familiar (A partir de las 17:00 hs en Calle 4 y 40) 💕`;
+        ? `¡Hola! Soy ${nameStr}. Confirmo asistencia para el festejo familiar del cumple de Charo (A partir de las 17:00 hs en Calle 4 y 40) 🏡💕`
+        : `¡Hola! Confirmo asistencia para el festejo familiar del cumple de Charo (A partir de las 17:00 hs en Calle 4 y 40) 🏡💕`;
     }
 
     const whatsappUrl = `https://wa.me/${INVITATION_CONFIG.links.whatsappNumber}?text=${encodeURIComponent(text)}`;
@@ -81,94 +76,83 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
           <X className="w-4 h-4" />
         </button>
 
-        {/* Encabezado */}
-        <div className="text-center mb-5">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#F8CDD7]/40 text-[#E95773] mb-2 shadow-2xs border border-[#F8CDD7]">
-            <HeartDoodle className="w-6 h-6" color="#E95773" />
+        {/* Encabezado con ícono temático */}
+        <div className="text-center mb-4">
+          <div
+            className={`inline-flex items-center justify-center w-12 h-12 rounded-full mb-2 shadow-2xs border ${
+              isFriends
+                ? 'bg-[#FFFDE8] text-[#B45309] border-[#FFF0A8]'
+                : 'bg-[#FEF4F7] text-[#E95773] border-[#F8CDD7]'
+            }`}
+          >
+            {isFriends ? (
+              <PartyIcon className="w-7 h-7" />
+            ) : (
+              <HouseIcon className="w-7 h-7" />
+            )}
           </div>
-          <h3 className="font-script font-bold text-3xl text-[#29252A] leading-tight">Confirmar Asistencia</h3>
-          <p className="text-xs text-[#29252A]/65 font-body font-medium mt-0.5">Seleccioná tu festejo para avisar por WhatsApp</p>
+          <h3 className="font-script font-bold text-3xl text-[#29252A] leading-tight">
+            Confirmar Asistencia
+          </h3>
+          <p className="text-xs text-[#29252A]/65 font-body font-medium mt-0.5">
+            {isFriends ? 'Festejo con Amiguitos' : 'Festejo Familiar'}
+          </p>
+        </div>
+
+        {/* Ficha predeterminada fija (SIN opción de cambiar de festejo) */}
+        <div
+          className={`p-3.5 rounded-2xl border mb-4 text-left ${
+            isFriends
+              ? 'bg-[#FFFDE8] border-[#FFF0A8]'
+              : 'bg-[#FEF4F7] border-[#F8CDD7]'
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            {isFriends ? (
+              <PartyIcon className="w-7 h-7 shrink-0" />
+            ) : (
+              <HouseIcon className="w-7 h-7 shrink-0" />
+            )}
+            <div>
+              <div className="font-script font-bold text-xl text-[#29252A] leading-tight">
+                {isFriends ? 'Para mis amiguitos' : 'Para la familia'}
+              </div>
+              <div
+                className={`text-xs font-body font-bold mt-0.5 ${
+                  isFriends ? 'text-[#B45309]' : 'text-[#E95773]'
+                }`}
+              >
+                {isFriends
+                  ? 'De 13:00 a 15:00 hs • Calle 4 y 40'
+                  : 'A partir de las 17:00 hs • Calle 4 y 40'}
+              </div>
+            </div>
+          </div>
         </div>
 
         <form onSubmit={handleConfirm} className="space-y-4">
           {/* Nombre opcional */}
           <div>
             <label className="block text-xs font-bold text-[#29252A] mb-1 font-body">
-              Tu nombre (opcional)
+              {isFriends ? 'Tu nombre o nombre del amiguito/a' : 'Tu nombre / Familia'}
             </label>
             <input
               type="text"
-              placeholder="Ej: Sofi / Familia Pérez"
+              placeholder={isFriends ? 'Ej: Sofi / Benja' : 'Ej: Tía Marisa / Familia Pérez'}
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
               className="w-full px-4 py-2.5 rounded-2xl bg-[#FFFDF7] border border-[#F8CDD7] text-sm text-[#29252A] placeholder-[#29252A]/40 focus:outline-none focus:ring-2 focus:ring-[#F8CDD7] font-body font-medium transition-all"
             />
           </div>
 
-          {/* Opciones: Amiguitos o Familia */}
-          <div>
-            <label className="block text-xs font-bold text-[#29252A] mb-2 font-body">
-              Elegí a cuál asistís:
-            </label>
-            <div className="space-y-2.5">
-              {/* Opción 1: Amiguitos */}
-              <button
-                type="button"
-                onClick={() => setSelectedEvent('amiguitos')}
-                className={`w-full flex items-center justify-between p-3.5 rounded-2xl text-left border transition-all cursor-pointer ${
-                  selectedEvent === 'amiguitos'
-                    ? 'bg-[#FFFDE8] border-[#FFF0A8] ring-2 ring-[#FFF0A8] shadow-2xs'
-                    : 'bg-[#FFFDF7] border-[#F8CDD7]/40 hover:bg-[#FFFDE8]/40'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <PartyIcon className="w-6 h-6 shrink-0" />
-                  <div>
-                    <div className="font-script font-bold text-lg text-[#29252A] leading-tight">
-                      Para mis amiguitos
-                    </div>
-                    <div className="text-xs text-[#29252A]/70 font-body font-medium">
-                      De 13:00 a 15:00 hs • Calle 4 y 40
-                    </div>
-                  </div>
-                </div>
-                {selectedEvent === 'amiguitos' && (
-                  <CheckCircle2 className="w-5 h-5 text-[#B45309] shrink-0" />
-                )}
-              </button>
-
-              {/* Opción 2: Familia */}
-              <button
-                type="button"
-                onClick={() => setSelectedEvent('familia')}
-                className={`w-full flex items-center justify-between p-3.5 rounded-2xl text-left border transition-all cursor-pointer ${
-                  selectedEvent === 'familia'
-                    ? 'bg-[#FEF4F7] border-[#F8CDD7] ring-2 ring-[#F8CDD7] shadow-2xs'
-                    : 'bg-[#FFFDF7] border-[#F8CDD7]/40 hover:bg-[#FEF4F7]/40'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <HouseIcon className="w-6 h-6 shrink-0" />
-                  <div>
-                    <div className="font-script font-bold text-lg text-[#29252A] leading-tight">
-                      Para la familia
-                    </div>
-                    <div className="text-xs text-[#29252A]/70 font-body font-medium">
-                      A partir de las 17:00 hs • Calle 4 y 40
-                    </div>
-                  </div>
-                </div>
-                {selectedEvent === 'familia' && (
-                  <CheckCircle2 className="w-5 h-5 text-[#E95773] shrink-0" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Botón WhatsApp */}
+          {/* Botón WhatsApp predeterminado para el número 2216730542 */}
           <button
             type="submit"
-            className="w-full mt-2 py-3.5 px-4 rounded-full bg-[#F8CDD7] hover:bg-[#F2BAC7] text-[#29252A] font-body font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 border border-[#F2B6C4]"
+            className={`w-full py-3.5 px-4 rounded-full text-[#29252A] font-body font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 border ${
+              isFriends
+                ? 'bg-[#FFF0A8] hover:bg-[#FDE68A] border-[#FCD34D]'
+                : 'bg-[#F8CDD7] hover:bg-[#F2BAC7] border-[#F2B6C4]'
+            }`}
           >
             <span>💬 Confirmar por WhatsApp</span>
           </button>

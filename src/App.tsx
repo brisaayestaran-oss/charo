@@ -144,7 +144,10 @@ export default function App() {
           <div className="flex items-center justify-center p-1.5 bg-[#FFF0A8]/30 rounded-full border border-[#FFF0A8] shadow-2xs gap-1.5">
             {/* Pestaña 1: Amiguitos */}
             <button
-              onClick={() => setActiveTab('amiguitos')}
+              onClick={() => {
+                setActiveTab('amiguitos');
+                setRsvpInitialEvent('amiguitos');
+              }}
               type="button"
               className={`flex-1 py-2.5 px-3 rounded-full text-[14px] font-body font-bold transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-1.5 ${
                 activeTab === 'amiguitos'
@@ -158,7 +161,10 @@ export default function App() {
 
             {/* Pestaña 2: Familia */}
             <button
-              onClick={() => setActiveTab('familia')}
+              onClick={() => {
+                setActiveTab('familia');
+                setRsvpInitialEvent('familia');
+              }}
               type="button"
               className={`flex-1 py-2.5 px-3 rounded-full text-[14px] font-body font-bold transition-all duration-200 cursor-pointer text-center flex items-center justify-center gap-1.5 ${
                 activeTab === 'familia'
@@ -353,7 +359,7 @@ export default function App() {
       <RsvpModal
         isOpen={isRsvpOpen}
         onClose={() => setIsRsvpOpen(false)}
-        initialEvent={rsvpInitialEvent}
+        targetEvent={rsvpInitialEvent}
       />
     </div>
   );

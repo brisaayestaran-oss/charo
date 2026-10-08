@@ -61,7 +61,7 @@ export const INVITATION_CONFIG = {
 
   // Contacto y enlaces de utilidad
   links: {
-    whatsappNumber: "5492215082163",
+    whatsappNumber: "5492216730542",
     eventAddress: "Calle 4 y 40",
     familyAddress: "Calle 4 y 40",
     familyMapsUrl: "https://www.google.com/maps/search/?api=1&query=Calle+4+y+40",
