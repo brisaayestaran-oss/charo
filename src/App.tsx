@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { INVITATION_CONFIG } from './config';
 import { MusicButton } from './components/MusicButton';
+import { CountdownTimer } from './components/CountdownTimer';
 import { LocationModal } from './components/LocationModal';
 import { RsvpModal } from './components/RsvpModal';
 import { SnoopyClosingVideo } from './components/SnoopyClosingVideo';
@@ -131,11 +132,22 @@ export default function App() {
         </motion.div>
 
         {/* Separador sutil de trazo fino con aire generoso */}
-        <div className="my-2.5 flex items-center justify-center gap-2 select-none opacity-40">
+        <div className="my-2 flex items-center justify-center gap-2 select-none opacity-40">
           <span className="w-8 h-[1px] bg-[#F8CDD7]" />
           <span className="text-[#E95773] text-xs">♡</span>
           <span className="w-8 h-[1px] bg-[#F8CDD7]" />
         </div>
+
+        {/* ========================================================= */}
+        {/* CUENTA REGRESIVA AL 12 DE OCTUBRE */}
+        {/* ========================================================= */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <CountdownTimer />
+        </motion.div>
 
         {/* ========================================================= */}
         {/* PESTAÑAS ARRIBA: "Amiguitos" y "Familia" (excluyentes) */}
@@ -201,21 +213,26 @@ export default function App() {
                 </div>
 
                 {/* 2. Título manuscrito */}
-                <h3 className="font-script font-bold text-[30px] sm:text-[32px] text-[#29252A] leading-tight mt-1 mb-1.5">
+                <h3 className="font-script font-bold text-[30px] sm:text-[32px] text-[#29252A] leading-tight mt-1 mb-1">
                   {INVITATION_CONFIG.friendsEvent.title}
                 </h3>
 
                 {/* 3. Texto secundario */}
-                <p className="font-body font-medium text-[13.5px] text-[#29252A]/70 mb-3.5">
+                <p className="font-body font-medium text-[13.5px] text-[#29252A]/70 mb-3">
                   {INVITATION_CONFIG.friendsEvent.subtitle}
                 </p>
 
-                {/* 4. Horario en negrita */}
+                {/* 4. Fecha del cumpleaños: 12 de Octubre */}
+                <div className="font-body font-bold text-[14.5px] text-[#B45309] mb-1">
+                  {INVITATION_CONFIG.friendsEvent.dateText}
+                </div>
+
+                {/* 5. Horario en negrita */}
                 <div className="font-body font-extrabold text-[17.5px] text-[#29252A] mb-1.5 tracking-wide">
                   {INVITATION_CONFIG.friendsEvent.time}
                 </div>
 
-                {/* 5. Lugar: Calle 4 y 40 */}
+                {/* 6. Lugar: Calle 4 y 40 */}
                 <div className="font-body font-bold text-[18px] text-[#29252A] mb-4">
                   {INVITATION_CONFIG.friendsEvent.placeName}
                 </div>
@@ -260,21 +277,26 @@ export default function App() {
                   </div>
 
                   {/* 2. Título manuscrito */}
-                  <h3 className="font-script font-bold text-[30px] sm:text-[32px] text-[#29252A] leading-tight mt-1 mb-1.5">
+                  <h3 className="font-script font-bold text-[30px] sm:text-[32px] text-[#29252A] leading-tight mt-1 mb-1">
                     {INVITATION_CONFIG.familyEvent.title}
                   </h3>
 
                   {/* 3. Texto secundario */}
-                  <p className="font-body font-medium text-[13.5px] text-[#29252A]/70 mb-3.5">
+                  <p className="font-body font-medium text-[13.5px] text-[#29252A]/70 mb-3">
                     {INVITATION_CONFIG.familyEvent.subtitle}
                   </p>
 
-                  {/* 4. Horario en negrita */}
+                  {/* 4. Fecha del cumpleaños: 12 de Octubre */}
+                  <div className="font-body font-bold text-[14.5px] text-[#E95773] mb-1">
+                    {INVITATION_CONFIG.familyEvent.dateText}
+                  </div>
+
+                  {/* 5. Horario en negrita */}
                   <div className="font-body font-extrabold text-[17.5px] text-[#29252A] mb-1.5 tracking-wide">
                     {INVITATION_CONFIG.familyEvent.time}
                   </div>
 
-                  {/* 5. Lugar: Calle 4 y 40 */}
+                  {/* 6. Lugar: Calle 4 y 40 */}
                   <div className="font-body font-bold text-[17.5px] text-[#29252A] mb-4">
                     {INVITATION_CONFIG.familyEvent.address}
                   </div>

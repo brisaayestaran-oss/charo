@@ -48,7 +48,9 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
             <MapPin className="w-5 h-5" />
           </div>
           <h3 className="font-script font-bold text-3xl text-[#29252A] leading-tight">Ubicación del Cumple</h3>
-          <p className="text-xs text-[#29252A]/65 font-body font-medium mt-0.5">Información de los festejos de Charo</p>
+          <p className="text-xs text-[#29252A]/65 font-body font-medium mt-0.5">
+            Lunes 12 de Octubre • Calle 4 y 40
+          </p>
         </div>
 
         {/* Fichas de lugares */}
@@ -59,7 +61,7 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
               <PartyIcon className="w-6 h-6 shrink-0 mt-0.5" />
               <div className="flex-1">
                 <div className="font-script font-bold text-xl text-[#29252A] leading-tight">Para mis amiguitos</div>
-                <div className="text-xs font-body font-bold text-[#B45309] mt-0.5">De 13:00 a 15:00 hs</div>
+                <div className="text-xs font-body font-bold text-[#B45309] mt-0.5">12 de Octubre • De 13:00 a 15:00 hs</div>
                 <div className="text-[13.5px] font-body font-bold text-[#29252A] mt-1 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#B45309]" />
                   <span>{address}</span>
@@ -74,7 +76,7 @@ export const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose })
               <HouseIcon className="w-6 h-6 shrink-0 mt-0.5" />
               <div className="flex-1">
                 <div className="font-script font-bold text-xl text-[#29252A] leading-tight">Para la familia</div>
-                <div className="text-xs font-body font-bold text-[#E95773] mt-0.5">A partir de las 17:00 hs</div>
+                <div className="text-xs font-body font-bold text-[#E95773] mt-0.5">12 de Octubre • A partir de las 17:00 hs</div>
                 <div className="text-[13.5px] font-body font-bold text-[#29252A] mt-1 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#E95773]" />
                   <span>{address}</span>

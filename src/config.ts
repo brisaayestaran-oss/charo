@@ -13,6 +13,15 @@ export const INVITATION_CONFIG = {
   age: 10,
   mainTitle: "¡Estás invitado!",
 
+  // Fecha del cumpleaños
+  date: {
+    day: "12",
+    month: "Octubre",
+    year: 2026,
+    fullDisplay: "12 de Octubre",
+    targetDate: "2026-10-12T13:00:00-03:00",
+  },
+
   // Assets Principales
   heroImageUrl: "/images/snoopy-portada.png",
   closingImageUrl: "/images/snoopy-cierre.png",
@@ -39,6 +48,7 @@ export const INVITATION_CONFIG = {
     subtitle: "Los invitamos a festejar conmigo",
     time: "De 13:00 a 15:00 hs",
     placeName: "Calle 4 y 40",
+    dateText: "Lunes 12 de Octubre",
   },
 
   // Separador intermedio
@@ -51,6 +61,7 @@ export const INVITATION_CONFIG = {
     subtitle: "Los esperamos para seguir festejando",
     time: "A partir de las 17:00 hs",
     address: "Calle 4 y 40",
+    dateText: "Lunes 12 de Octubre",
   },
 
   // Cierre

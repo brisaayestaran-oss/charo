@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { INVITATION_CONFIG } from '../config';
-import { HeartDoodle, PartyIcon, HouseIcon } from './Decorations';
+import { PartyIcon, HouseIcon } from './Decorations';
 
 interface RsvpModalProps {
   isOpen: boolean;
@@ -39,12 +39,12 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
 
     if (isFriends) {
       text = nameStr
-        ? `¡Hola! Soy ${nameStr}. Confirmo asistencia para festejar con los amiguitos el cumple de Charo (De 13:00 a 15:00 hs en Calle 4 y 40) 🎈💕`
-        : `¡Hola! Confirmo asistencia para festejar con los amiguitos el cumple de Charo (De 13:00 a 15:00 hs en Calle 4 y 40) 🎈💕`;
+        ? `¡Hola! Soy ${nameStr}. Confirmo asistencia para festejar con los amiguitos el cumple de Charo el 12 de Octubre (De 13:00 a 15:00 hs en Calle 4 y 40) 🎈💕`
+        : `¡Hola! Confirmo asistencia para festejar con los amiguitos el cumple de Charo el 12 de Octubre (De 13:00 a 15:00 hs en Calle 4 y 40) 🎈💕`;
     } else {
       text = nameStr
-        ? `¡Hola! Soy ${nameStr}. Confirmo asistencia para el festejo familiar del cumple de Charo (A partir de las 17:00 hs en Calle 4 y 40) 🏡💕`
-        : `¡Hola! Confirmo asistencia para el festejo familiar del cumple de Charo (A partir de las 17:00 hs en Calle 4 y 40) 🏡💕`;
+        ? `¡Hola! Soy ${nameStr}. Confirmo asistencia para el festejo familiar del cumple de Charo el 12 de Octubre (A partir de las 17:00 hs en Calle 4 y 40) 🏡💕`
+        : `¡Hola! Confirmo asistencia para el festejo familiar del cumple de Charo el 12 de Octubre (A partir de las 17:00 hs en Calle 4 y 40) 🏡💕`;
     }
 
     const whatsappUrl = `https://wa.me/${INVITATION_CONFIG.links.whatsappNumber}?text=${encodeURIComponent(text)}`;
@@ -99,7 +99,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
           </p>
         </div>
 
-        {/* Ficha predeterminada fija (SIN opción de cambiar de festejo) */}
+        {/* Ficha predeterminada fija con la fecha 12 de Octubre */}
         <div
           className={`p-3.5 rounded-2xl border mb-4 text-left ${
             isFriends
@@ -123,8 +123,8 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                 }`}
               >
                 {isFriends
-                  ? 'De 13:00 a 15:00 hs • Calle 4 y 40'
-                  : 'A partir de las 17:00 hs • Calle 4 y 40'}
+                  ? '12 de Octubre • De 13:00 a 15:00 hs • Calle 4 y 40'
+                  : '12 de Octubre • A partir de las 17:00 hs • Calle 4 y 40'}
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
             />
           </div>
 
-          {/* Botón WhatsApp predeterminado para el número 2216730542 */}
+          {/* Botón WhatsApp */}
           <button
             type="submit"
             className={`w-full py-3.5 px-4 rounded-full text-[#29252A] font-body font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 border ${
